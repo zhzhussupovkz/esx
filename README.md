@@ -1,5 +1,5 @@
-#Esx 
-Search and dump from elasticsearch cluster. Use erlang httpc module for requests
+# Esx 
+Search and dump from elasticsearch cluster. Use erlang [http://erlang.org/doc/man/httpc.html](http://erlang.org/doc/man/httpc.html) module for requests
 
 ## Run esdump mix task
 
@@ -19,4 +19,15 @@ defmodule Mix.Tasks.Esdump do
     {:ok, pid}
   end
 end
+```
+
+## Examples
+Dump elasticsearch data from host 192.168.0.5 port 11200 and index phones:
+```console
+mix esdump 192.168.0.5:11200 phones
+```
+
+Dump elasticsearch data from host 10.10.6.17 port 9200 and index books:
+```console
+mix esdump 10.10.6.17:9200 books
 ```
