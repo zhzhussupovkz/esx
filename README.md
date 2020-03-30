@@ -1,21 +1,22 @@
-# Esx
+#Esx 
+Search and dump from elasticsearch cluster. Use erlang httpc module for requests
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `esx` to your list of dependencies in `mix.exs`:
+## Run esdump mix task
 
 ```elixir
-def deps do
-  [
-    {:esx, "~> 0.1.0"}
-  ]
+defmodule Mix.Tasks.Esdump do
+  use Mix.Task
+
+  def run(args) do
+    es = Enum.at(args, 0) # elasticsearch address host:port (192.168.0.1:9200)
+    index = Enum.at(args, 1) # elasticsearch index name (for example: books)
+    :logger.info "elasticsearch #{es}"
+    :logger.info "index dump: #{index}" 
+    with :ok <- File.mkdir_p(Path.dirname("./#{index}_dump.json")) do
+      Esx.Req.scroll(es, index, nil)
+    end
+    pid = spawn fn -> 1 + 1 end
+    {:ok, pid}
+  end
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/esx](https://hexdocs.pm/esx).
-
